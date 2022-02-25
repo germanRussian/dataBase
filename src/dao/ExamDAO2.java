@@ -15,8 +15,9 @@ import java.util.List;
 import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
 import domain.ExamVO;
+import util.DbUtil;
 
-public class ExamDAO {
+public class ExamDAO2 extends DbUtil {
 
 	/**
 	 * C:creat() - 등록하는 메소드 접근지정자 : publics param : 등록될 값 return :없음
@@ -24,12 +25,10 @@ public class ExamDAO {
 	 * @author smart17
 	 *
 	 */
-	public void create(ExamVO vo) {
+	public void create(ExamVO vo)  {
 		// 코드 작성
 
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String passward = "smart";
+		
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("\n INSERT INTO exam");
@@ -38,14 +37,14 @@ public class ExamDAO {
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		
+		
 		int idx = 1; // 0으로 시작할때는 ++inx 사용
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// DB연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = dbconn();
 
 			// PrepareStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
@@ -65,20 +64,15 @@ public class ExamDAO {
 		}
 
 		finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
+//			DbUtil.dbClose(conn, stmt, null); //메소드 활용법
+			dbClose(conn, stmt, null);// 상속을 활용법
+			
 
 		}
 
 	}
+
+	
 
 	/**
 	 * R:read() - 등록하는 메소드 접근지정자 : publics param : 조회할 값 return :List
@@ -91,9 +85,9 @@ public class ExamDAO {
 	public List read() {
 		// 코드 작성
 
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String passward = "smart";
+		
+		
+		
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM exam ");
 
@@ -105,11 +99,9 @@ public class ExamDAO {
 		List<ExamVO> list = new ArrayList<ExamVO>();
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// DB연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = dbconn();
 
 			// PreparStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
@@ -134,18 +126,7 @@ public class ExamDAO {
 		}
 
 		finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-				if (rs != null)
-					rs.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			dbClose(conn, stmt, null);// 상속을 활용법
 
 		}
 		return list;
@@ -155,10 +136,7 @@ public class ExamDAO {
 	//일부 내용 가져오기 - 해당되는 게시물을 보기 위한 작업
 	public ExamVO read(ExamVO vo) {
 		// 코드 작성
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		;
-		String user = "root";
-		String passward = "smart";
+		
 
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM exam WHERE num = ? ");
@@ -171,11 +149,10 @@ public class ExamDAO {
 		ResultSet rs = null;
 
 		try {
-			// 드라이버 로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// 연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = dbconn();
+			
 			// PreparedStatment(SQL문 + 실행)
 			stmt = conn.prepareStatement(sql.toString());
 
@@ -199,16 +176,7 @@ public class ExamDAO {
 			e.printStackTrace();
 		} finally {
 
-			try {
-				if(conn != null) conn.close();
-				if(stmt != null)stmt.close();
-				if(rs != null) rs.close();
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			dbClose(conn, stmt, null);// 상속을 활용법
 		}
 
 		// 코드작성 끝
@@ -226,9 +194,7 @@ public class ExamDAO {
 	public void update(ExamVO vo) {
 
 
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String passward = "smart";
+		
 
 		StringBuffer sql = new StringBuffer();
 		//sql.append(" UPDATE exam SET varcharTest = ? WHERE 1 ");
@@ -242,11 +208,10 @@ public class ExamDAO {
 		int idx = 1;
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 
 			// DB연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = dbconn();
 
 			// PrepareStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
@@ -269,17 +234,7 @@ public class ExamDAO {
 		}
 
 		finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			dbClose(conn, stmt, null);// 상속을 활용법
 		}
 
 	}
@@ -292,9 +247,7 @@ public class ExamDAO {
 	 */
 	public void delete(ExamVO vo) {
 
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String password = "smart";
+		
 
 		StringBuffer sql = new StringBuffer();
 		
@@ -312,11 +265,10 @@ public class ExamDAO {
 		
 		
 		try {
-			// 1. 드라이버 로드(Class.forName()) - 어떤 데이터베이스 사용할꺼냐
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 
 //			2. DB연결(DriverManager.getConnection())
-			conn = DriverManager.getConnection(url, user, password);
+			conn = dbconn();
 
 //			3. SQL문작성(Statement, PrepareStatement) - sql직접 실행하거나, 값 설정하고 실행하거나 / PrepareStatement을 주로 사용, Statement는 해킹의 우려가 있다.
 			stmt = conn.prepareStatement(sql.toString());
@@ -345,18 +297,7 @@ public class ExamDAO {
 		} finally {
 
 			// 6. 닫기(close())
-			try {
-//				if (rs != null)
-//					rs.close();
-				if (stmt != null)
-					stmt.close();
-				if (conn != null)
-					conn.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			dbClose(conn, stmt, null);// 상속을 활용법
 
 		}
 

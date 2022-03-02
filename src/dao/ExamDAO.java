@@ -39,7 +39,8 @@ public class ExamDAO extends Dbutil {
 
 		try {
 
-			conn = getConn();
+			//conn = new Dbutil.getConn(); - has a 방식 
+			conn = getConn();//is a 방식
 
 			// PrepareStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());

@@ -15,8 +15,9 @@ import java.util.List;
 import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
 import domain.ExamVO;
+import util.Dbutil;
 
-public class ExamDAO {
+public class ExamDAO extends Dbutil {
 
 	/**
 	 * C:creat() - 등록하는 메소드 접근지정자 : publics param : 등록될 값 return :없음
@@ -26,10 +27,6 @@ public class ExamDAO {
 	 */
 	public void create(ExamVO vo) {
 		// 코드 작성
-
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String passward = "smart";
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("\n INSERT INTO exam");
@@ -41,11 +38,8 @@ public class ExamDAO {
 		int idx = 1; // 0으로 시작할때는 ++inx 사용
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// DB연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = getConn();
 
 			// PrepareStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
@@ -86,20 +80,17 @@ public class ExamDAO {
 	 * @author smart17
 	 *
 	 */
-	
-	//전체 내용 보여주기
+
+	// 전체 내용 보여주기
 	public List read() {
 		// 코드 작성
 
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String passward = "smart";
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM exam ");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		
+
 		ResultSet rs = null;
 
 		List<ExamVO> list = new ArrayList<ExamVO>();
@@ -109,7 +100,7 @@ public class ExamDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// DB연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = getConn();
 
 			// PreparStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
@@ -118,13 +109,8 @@ public class ExamDAO {
 
 			// 결과처리(Select문만 ResultSet 객체 리턴)
 			while (rs.next()) {
-				list.add(new ExamVO(rs.getInt("num"), 
-						rs.getString("varcharTest"), 
-						rs.getString("charTest"),
-						rs.getDouble("doubleTest"), 
-						rs.getDate("dateTest"), 
-						rs.getTimestamp("dateTimeTest"))
-						);
+				list.add(new ExamVO(rs.getInt("num"), rs.getString("varcharTest"), rs.getString("charTest"),
+						rs.getDouble("doubleTest"), rs.getDate("dateTest"), rs.getTimestamp("dateTimeTest")));
 
 			}
 
@@ -150,21 +136,16 @@ public class ExamDAO {
 		}
 		return list;
 	}
-	
-	
-	//일부 내용 가져오기 - 해당되는 게시물을 보기 위한 작업
+
+	// 일부 내용 가져오기 - 해당되는 게시물을 보기 위한 작업
 	public ExamVO read(ExamVO vo) {
 		// 코드 작성
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		;
-		String user = "root";
-		String passward = "smart";
 
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM exam WHERE num = ? ");
 
 		ExamVO examVo = null;
-		
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ExamVO examvo = null;
@@ -175,22 +156,17 @@ public class ExamDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// 연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = getConn();
 			// PreparedStatment(SQL문 + 실행)
 			stmt = conn.prepareStatement(sql.toString());
 
 			stmt.setInt(1, vo.getNum());
 
 			rs = stmt.executeQuery();
-			
+
 			if (rs.next()) {
-				examVo = new ExamVO(rs.getInt("num"),
-						rs.getString("varcharTest"), 
-						rs.getString("charTest"),
-						rs.getDouble("doubleTest"), 
-						rs.getDate("dateTest"), 
-						rs.getTimestamp("dateTimeTest")
-						);
+				examVo = new ExamVO(rs.getInt("num"), rs.getString("varcharTest"), rs.getString("charTest"),
+						rs.getDouble("doubleTest"), rs.getDate("dateTest"), rs.getTimestamp("dateTimeTest"));
 
 			}
 
@@ -200,10 +176,13 @@ public class ExamDAO {
 		} finally {
 
 			try {
-				if(conn != null) conn.close();
-				if(stmt != null)stmt.close();
-				if(rs != null) rs.close();
-				
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -225,17 +204,12 @@ public class ExamDAO {
 	 */
 	public void update(ExamVO vo) {
 
-
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String passward = "smart";
-
 		StringBuffer sql = new StringBuffer();
-		//sql.append(" UPDATE exam SET varcharTest = ? WHERE 1 ");
-				sql.append(" UPDATE exam ");
-				sql.append(" SET varchartest = ?, doubleTest = ? ");
-				sql.append(" WHERE num = ? ");
-				
+		// sql.append(" UPDATE exam SET varcharTest = ? WHERE 1 ");
+		sql.append(" UPDATE exam ");
+		sql.append(" SET varchartest = ?, doubleTest = ? ");
+		sql.append(" WHERE num = ? ");
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
@@ -246,13 +220,12 @@ public class ExamDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// DB연결
-			conn = DriverManager.getConnection(url, user, passward);
+			conn = getConn();
 
 			// PrepareStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
-			
-			
-						stmt.setString(idx++, vo.getVarcharTest());
+
+			stmt.setString(idx++, vo.getVarcharTest());
 			stmt.setDouble(idx++, vo.getDoubleTest());
 			stmt.setInt(idx++, vo.getNum());
 
@@ -292,41 +265,26 @@ public class ExamDAO {
 	 */
 	public void delete(ExamVO vo) {
 
-		String url = "jdbc:mysql://localhost:3306/smart?characterEncoding=UTF-8&serverTimezone=Asia/Seoul";
-		String user = "root";
-		String password = "smart";
-
 		StringBuffer sql = new StringBuffer();
-		
-		
-		
+
 		sql.append(" DELETE FROM exam ");
 		sql.append(" WHERE num = ? ");
-		
-		
-		
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
-	
 
-		
-		
 		try {
 			// 1. 드라이버 로드(Class.forName()) - 어떤 데이터베이스 사용할꺼냐
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 //			2. DB연결(DriverManager.getConnection())
-			conn = DriverManager.getConnection(url, user, password);
+			conn = getConn();
 
 //			3. SQL문작성(Statement, PrepareStatement) - sql직접 실행하거나, 값 설정하고 실행하거나 / PrepareStatement을 주로 사용, Statement는 해킹의 우려가 있다.
 			stmt = conn.prepareStatement(sql.toString());
-			
-			stmt.setInt(1, vo.getNum());
-					
 
-			
-			
-			
+			stmt.setInt(1, vo.getNum());
+
 //			4. SQL문실행(executeQuery(), executeUpdate())
 			int res = stmt.executeUpdate();
 

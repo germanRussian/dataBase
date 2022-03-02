@@ -14,10 +14,10 @@ import java.util.List;
 
 import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
-import domain.ExamVO;
+import domain.SampleSP;
 import util.Dbutil;
 
-public class ExamDAO extends Dbutil {
+public class ExamDAO2 extends Dbutil {
 
 	/**
 	 * 
@@ -27,13 +27,13 @@ public class ExamDAO extends Dbutil {
 	 * @author smart17
 	 *
 	 */
-	public void create(ExamVO vo) {
+	public void create(SampleSP sp) {
 		// 코드 작성
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("\n INSERT INTO exam");
-		sql.append("\n (varcharTest, charTest, doubleTest, dateTest, dateTimeTest)");
-		sql.append("\n VALUES(?, ?, ?, ?, ?)");
+		sql.append("\n (num, strData, sampleDate)");
+		sql.append("\n VALUES(?, ?, ?)");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -48,12 +48,11 @@ public class ExamDAO extends Dbutil {
 			stmt = conn.prepareStatement(sql.toString());
 
 			// ?값 설정
-			stmt.setString(idx++, vo.getVarcharTest());
-			stmt.setString(idx++, vo.getCharTest());
-			stmt.setDouble(idx++, vo.getDoubleTest());
-			stmt.setDate(idx++, new Date(vo.getDateTest().getTime()));
-			stmt.setTimestamp(idx++, vo.getDateTimeTest());
-
+			stmt.setInt(idx++, sp.getNum());
+			stmt.setString(idx++, sp.getStrData());
+			stmt.setDate(idx++, sp.getSampleDate());
+			
+			
 			int res = stmt.executeUpdate();// 데이터 삽입
 
 		} catch (Exception e) {
@@ -87,7 +86,7 @@ public class ExamDAO extends Dbutil {
 
 		ResultSet rs = null;
 
-		List<ExamVO> list = new ArrayList<ExamVO>();
+		List<SampleSP> list = new ArrayList<SampleSP>();
 
 		try {
 			// 드라이버로드
@@ -103,13 +102,12 @@ public class ExamDAO extends Dbutil {
 
 			// 결과처리(Select문만 ResultSet 객체 리턴)
 			while (rs.next()) {
-				list.add(new ExamVO(rs.getInt("num"), rs.getString("varcharTest"), rs.getString("charTest"),
-						rs.getDouble("doubleTest"), rs.getDate("dateTest"), rs.getTimestamp("dateTimeTest")));
+				list.add(new SampleSP(rs.getInt("num"), rs.getString("strData"), rs.getDate("sampleDate")));
 
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -120,17 +118,18 @@ public class ExamDAO extends Dbutil {
 	}
 
 	// 일부 내용 가져오기 - 해당되는 게시물을 보기 위한 작업
-	public ExamVO read(ExamVO vo) {
+	public SampleSP read(SampleSP sp) {
 		// 코드 작성
 
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM exam WHERE num = ? ");
 
-		ExamVO examVo = null;
+		SampleSP SampleSP = null;
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ExamVO examvo = null;
+		
+
 		ResultSet rs = null;
 
 		try {
@@ -142,18 +141,18 @@ public class ExamDAO extends Dbutil {
 			// PreparedStatment(SQL문 + 실행)
 			stmt = conn.prepareStatement(sql.toString());
 
-			stmt.setInt(1, vo.getNum());
+			stmt.setInt(1, sp.getNum());
 
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				examVo = new ExamVO(rs.getInt("num"), rs.getString("varcharTest"), rs.getString("charTest"),
-						rs.getDouble("doubleTest"), rs.getDate("dateTest"), rs.getTimestamp("dateTimeTest"));
+				SampleSP = new SampleSP(rs.getInt("num"), rs.getString("varcharTest"), rs.getDate("charTest"));
+						
 
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 
@@ -161,7 +160,7 @@ public class ExamDAO extends Dbutil {
 		}
 
 		// 코드작성 끝
-		return examVo;
+		return SampleSP;
 
 	}
 
@@ -172,12 +171,12 @@ public class ExamDAO extends Dbutil {
 	 * @return
 	 *
 	 */
-	public void update(ExamVO vo) {
+	public void update(SampleSP sp) {
 
 		StringBuffer sql = new StringBuffer();
 		// sql.append(" UPDATE exam SET varcharTest = ? WHERE 1 ");
 		sql.append(" UPDATE exam ");
-		sql.append(" SET varchartest = ?, doubleTest = ? ");
+		sql.append(" SET strData = ?, sampleDate = ? ");
 		sql.append(" WHERE num = ? ");
 
 		Connection conn = null;
@@ -195,9 +194,10 @@ public class ExamDAO extends Dbutil {
 			// PrepareStatament(SQL작성 및 실행)
 			stmt = conn.prepareStatement(sql.toString());
 
-			stmt.setString(idx++, vo.getVarcharTest());
-			stmt.setDouble(idx++, vo.getDoubleTest());
-			stmt.setInt(idx++, vo.getNum());
+			
+			stmt.setDate(idx, sp.getSampleDate());
+			stmt.setString(idx++, sp.getStrData());
+			stmt.setInt(idx++, sp.getNum());
 
 			int res = stmt.executeUpdate();
 			if (res > 0) {
@@ -207,7 +207,7 @@ public class ExamDAO extends Dbutil {
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -224,7 +224,7 @@ public class ExamDAO extends Dbutil {
 	 * @author smart17
 	 *
 	 */
-	public void delete(ExamVO vo) {
+	public void delete(SampleSP sp) {
 
 		StringBuffer sql = new StringBuffer();
 
@@ -244,7 +244,7 @@ public class ExamDAO extends Dbutil {
 //			3. SQL문작성(Statement, PrepareStatement) - sql직접 실행하거나, 값 설정하고 실행하거나 / PrepareStatement을 주로 사용, Statement는 해킹의 우려가 있다.
 			stmt = conn.prepareStatement(sql.toString());
 
-			stmt.setInt(1, vo.getNum());
+			stmt.setInt(1, sp.getNum());
 
 //			4. SQL문실행(executeQuery(), executeUpdate())
 			int res = stmt.executeUpdate();
@@ -258,7 +258,7 @@ public class ExamDAO extends Dbutil {
 
 		} catch (Exception e) {
 
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 
 		} finally {

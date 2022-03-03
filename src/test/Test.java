@@ -15,10 +15,11 @@ public class Test {
 	public static void main(String[] args) {
 
 		// 1. 객체 생성, 메소드 활용하여 작동
-//		simple2DAO dao = new simple2DAO();
+//		simpleDAO dao = new simple2DAO();
+//		ExamDAO dao = new ExamDAO();
 //		dao.create();
 //		//dao.read();
-//		//dao.update();
+		//dao.update();
 //		//dao.delete();
 
 		
@@ -27,7 +28,7 @@ public class Test {
 		
 		
 		// 2. 생성자를 활용하여 데이터를 생성할 것이다.
-		ExamDAO dao = new ExamDAO();
+//		ExamDAO dao = new ExamDAO();
 //		ExamVO Createvo = new ExamVO(0, "가변폭문자열", "고정폭문자열", 0.123, new Date(),
 //				new Timestamp(System.currentTimeMillis()));
 		// System.out.println(Createvo);
@@ -40,6 +41,7 @@ public class Test {
 		
 		
 		// 3. Read 내용 불러오기.(전체 내용을 가져오기)
+//		ExamDAO dao = new ExamDAO();
 //		List<ExamVO> list =  dao.read();
 //		Iterator<ExamVO> it = list.iterator();//배열 속에서 하나씩 꺼낼 수 있다.
 //		while(it.hasNext()) {
@@ -56,6 +58,7 @@ public class Test {
 		
 		
 		// 4. Read 내용 불러오기.(일부 내용을 선택하여 가져오기)
+//		ExamDAO dao = new ExamDAO();
 //		ExamVO readVo = new ExamVO();
 //		readVo.setNum(6);
 //		System.out.println(readVo);
@@ -77,7 +80,7 @@ public class Test {
 		
 		
 		// 5. 생성자를 활용하여 수정할 것이다.
-
+//		ExamDAO dao = new ExamDAO();
 //		ExamVO updatevo = new ExamVO();
 //		
 //		ExamVO updatevo = new ExamVO(8, "바꿀값", "고정폭문자열", 123.456, new Date(),
@@ -94,6 +97,7 @@ public class Test {
 		
 		
 		// 6. 삭제를 해봅시다.
+		
 		ExamVO deletevo = new ExamVO();
 		deletevo.setNum(13);
 //		deletevo.setVarcharTest("가변폭문자열");

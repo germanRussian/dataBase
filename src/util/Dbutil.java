@@ -35,7 +35,7 @@ public class Dbutil {
 			e.printStackTrace();
 		}
 
-		return null;
+		return conn;
 
 		/**
 		 * 

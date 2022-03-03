@@ -90,9 +90,7 @@ public class ExamDAO extends Dbutil {
 		List<ExamVO> list = new ArrayList<ExamVO>();
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// DB연결
 			conn = getConn();
 
@@ -134,8 +132,7 @@ public class ExamDAO extends Dbutil {
 		ResultSet rs = null;
 
 		try {
-			// 드라이버 로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 
 			// 연결
 			conn = getConn();
@@ -186,9 +183,7 @@ public class ExamDAO extends Dbutil {
 		int idx = 1;
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// DB연결
 			conn = getConn();
 
@@ -235,8 +230,7 @@ public class ExamDAO extends Dbutil {
 		PreparedStatement stmt = null;
 
 		try {
-			// 1. 드라이버 로드(Class.forName()) - 어떤 데이터베이스 사용할꺼냐
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 
 //			2. DB연결(DriverManager.getConnection())
 			conn = getConn();

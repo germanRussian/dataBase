@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
-import domain.SampleSP;
+import domain.SampleVO;
 import util.Dbutil;
 
 public class ExamDAO2 extends Dbutil {
@@ -27,16 +27,17 @@ public class ExamDAO2 extends Dbutil {
 	 * @author smart17
 	 *
 	 */
-	public void create(SampleSP sp) {
+	public void create(SampleVO sp) {
 		// 코드 작성
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("\n INSERT INTO exam");
+		sql.append("\n INSERT INTO sample");
 		sql.append("\n (num, strData, sampleDate)");
 		sql.append("\n VALUES(?, ?, ?)");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		
 		int idx = 1; // 0으로 시작할때는 ++inx 사용
 
 		try {
@@ -75,23 +76,22 @@ public class ExamDAO2 extends Dbutil {
 	 */
 
 	// 전체 내용 보여주기
-	public List read() {
+	public List<SampleVO> read() {
 		// 코드 작성
 
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT * FROM exam ");
+		sql.append(" SELECT * FROM sample ");
+		//sql.append(" ")
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		ResultSet rs = null;
 
-		List<SampleSP> list = new ArrayList<SampleSP>();
+		List<SampleVO> list = new ArrayList<SampleVO>();
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// DB연결
 			conn = getConn();
 
@@ -102,7 +102,7 @@ public class ExamDAO2 extends Dbutil {
 
 			// 결과처리(Select문만 ResultSet 객체 리턴)
 			while (rs.next()) {
-				list.add(new SampleSP(rs.getInt("num"), rs.getString("strData"), rs.getDate("sampleDate")));
+				list.add(new SampleVO(rs.getInt("num"), rs.getString("strData"), rs.getDate("sampleDate")));
 
 			}
 
@@ -116,15 +116,22 @@ public class ExamDAO2 extends Dbutil {
 		}
 		return list;
 	}
-
+	
+	/**
+	 * R:read() - 등록하는 메소드 접근지정자 : publics param : 조회할 값 return :List
+	 * 
+	 * @author smart17
+	 *
+	 */
 	// 일부 내용 가져오기 - 해당되는 게시물을 보기 위한 작업
-	public SampleSP read(SampleSP sp) {
+	public SampleVO read(SampleVO sp) {
 		// 코드 작성
 
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT * FROM exam WHERE num = ? ");
+		sql.append(" SELECT * FROM sample ");
+		sql.append(" WHERE num = ? ");
 
-		SampleSP SampleSP = null;
+		SampleVO sampleSP = null;
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -133,20 +140,19 @@ public class ExamDAO2 extends Dbutil {
 		ResultSet rs = null;
 
 		try {
-			// 드라이버 로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 			// 연결
 			conn = getConn();
+			
 			// PreparedStatment(SQL문 + 실행)
 			stmt = conn.prepareStatement(sql.toString());
 
 			stmt.setInt(1, sp.getNum());
-
+			
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				SampleSP = new SampleSP(rs.getInt("num"), rs.getString("varcharTest"), rs.getDate("charTest"));
+				sampleSP = new SampleVO(rs.getInt("num"), rs.getString("strData"), rs.getDate("sampleDate"));
 						
 
 			}
@@ -160,7 +166,7 @@ public class ExamDAO2 extends Dbutil {
 		}
 
 		// 코드작성 끝
-		return SampleSP;
+		return sampleSP;
 
 	}
 
@@ -171,11 +177,11 @@ public class ExamDAO2 extends Dbutil {
 	 * @return
 	 *
 	 */
-	public void update(SampleSP sp) {
+	public void update(SampleVO sp) {
 
 		StringBuffer sql = new StringBuffer();
-		// sql.append(" UPDATE exam SET varcharTest = ? WHERE 1 ");
-		sql.append(" UPDATE exam ");
+		
+		sql.append(" UPDATE sample ");
 		sql.append(" SET strData = ?, sampleDate = ? ");
 		sql.append(" WHERE num = ? ");
 
@@ -185,8 +191,7 @@ public class ExamDAO2 extends Dbutil {
 		int idx = 1;
 
 		try {
-			// 드라이버로드
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 
 			// DB연결
 			conn = getConn();
@@ -195,11 +200,13 @@ public class ExamDAO2 extends Dbutil {
 			stmt = conn.prepareStatement(sql.toString());
 
 			
-			stmt.setDate(idx, sp.getSampleDate());
 			stmt.setString(idx++, sp.getStrData());
+			stmt.setDate(idx++, sp.getSampleDate());
 			stmt.setInt(idx++, sp.getNum());
-
+			
 			int res = stmt.executeUpdate();
+			
+			
 			if (res > 0) {
 				System.out.println(res + "개의 행이 수정 되었습니다.");
 			} else {
@@ -224,20 +231,18 @@ public class ExamDAO2 extends Dbutil {
 	 * @author smart17
 	 *
 	 */
-	public void delete(SampleSP sp) {
+	public void delete(SampleVO sp) {
 
 		StringBuffer sql = new StringBuffer();
 
-		sql.append(" DELETE FROM exam ");
+		sql.append(" DELETE FROM sample ");
 		sql.append(" WHERE num = ? ");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		try {
-			// 1. 드라이버 로드(Class.forName()) - 어떤 데이터베이스 사용할꺼냐
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
+			
 //			2. DB연결(DriverManager.getConnection())
 			conn = getConn();
 

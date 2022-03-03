@@ -2,7 +2,7 @@ package domain;
 
 import java.sql.Date;
 
-public class SampleSP {
+public class SampleVO {
 	
 	
 	private int num;
@@ -11,12 +11,12 @@ public class SampleSP {
 	
 	
 	
-	public SampleSP() {
+	public SampleVO() {
 		}
 
 
 
-	public SampleSP(int num, String strData, Date sampleDate) {
+	public SampleVO(int num, String strData, Date sampleDate) {
 		
 		this.num = num;
 		this.strData = strData;

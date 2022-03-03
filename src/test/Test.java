@@ -80,7 +80,7 @@ public class Test {
 		
 		
 		// 5. 생성자를 활용하여 수정할 것이다.
-//		ExamDAO dao = new ExamDAO();
+//		
 //		ExamVO updatevo = new ExamVO();
 //		
 //		ExamVO updatevo = new ExamVO(8, "바꿀값", "고정폭문자열", 123.456, new Date(),
@@ -97,11 +97,11 @@ public class Test {
 		
 		
 		// 6. 삭제를 해봅시다.
-		
-		ExamVO deletevo = new ExamVO();
-		deletevo.setNum(13);
-//		deletevo.setVarcharTest("가변폭문자열");
-		dao.delete(deletevo);
-//		한개씩만 지울수 있단다.
+//		ExamDAO dao = new ExamDAO();
+//		ExamVO deletevo = new ExamVO();
+//		deletevo.setNum(13);
+////		deletevo.setVarcharTest("가변폭문자열");
+//		dao.delete(deletevo);
+////		한개씩만 지울수 있단다.
 	}
 }

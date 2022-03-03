@@ -51,7 +51,7 @@ public class ExamDAO2 extends Dbutil {
 			// ?값 설정
 			stmt.setInt(idx++, sp.getNum());
 			stmt.setString(idx++, sp.getStrData());
-			stmt.setDate(idx++, sp.getSampleDate());
+			stmt.setDate(idx++, (Date) sp.getSampleDate());
 			
 			
 			int res = stmt.executeUpdate();// 데이터 삽입

@@ -26,10 +26,10 @@ public class Test1 {
 //		
 
 		// 2. 생성자를 활용하여 데이터를 생성할 것이다.
-//		ExamDAO2 aaa = new ExamDAO2();
-//		SampleVO Createvo = new SampleVO(0, "Crew1", new Date(System.currentTimeMillis()));
-////		System.out.println(Createvo);
-//		aaa.create(Createvo);  // 내용 생성하기
+		ExamDAO2 aaa = new ExamDAO2();
+		SampleVO Createvo = new SampleVO(0, "Crew1", new Date(System.currentTimeMillis()));
+//		System.out.println(Createvo);
+		aaa.create(Createvo);  // 내용 생성하기
 
 		// 3. Read 내용 불러오기.(전체 내용을 가져오기)
 //		ExamDAO2 aaa = new ExamDAO2();
@@ -63,9 +63,9 @@ public class Test1 {
 		
 		// 5. 생성자를 활용하여 수정할 것이다.
 		// 5-1방법
-		ExamDAO2 aaa = new ExamDAO2();
-		SampleVO updateVO = new SampleVO(4, "Crew233333",   new Date(0, 10, 12));			
-		aaa.update(updateVO);
+//		ExamDAO2 aaa = new ExamDAO2();
+//		SampleVO updateVO = new SampleVO(4, "Crew233333",   new Date(0, 10, 12));			
+//		aaa.update(updateVO);
 
 		// 5-2방법
 //		ExamDAO2 aaa = new ExamDAO2();

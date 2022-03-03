@@ -19,7 +19,7 @@ import util.Dbutil;
 
 public class ExamDAO2 extends Dbutil {
 
-	/**
+	/** 
 	 * 
 	 * 데이터 베이스 쿼리 CRUD의 묶음
 	 * C:creat() - 등록하는 메소드 접근지정자 : publics param : 등록될 값 return :없음

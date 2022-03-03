@@ -1,6 +1,6 @@
 package domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class SampleVO {
 	
@@ -27,6 +27,9 @@ public class SampleVO {
 
 	
 	
+	
+
+
 	@Override
 	public String toString() {
 		return "SampleSP [num=" + num + ", strData=" + strData + ", sampleDate=" + sampleDate + "]";

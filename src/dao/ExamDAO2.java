@@ -201,7 +201,8 @@ public class ExamDAO2 extends Dbutil {
 
 			
 			stmt.setString(idx++, sp.getStrData());
-			stmt.setDate(idx++, sp.getSampleDate());
+			
+			stmt.setDate(idx++, (Date) sp.getSampleDate());
 			stmt.setInt(idx++, sp.getNum());
 			
 			int res = stmt.executeUpdate();

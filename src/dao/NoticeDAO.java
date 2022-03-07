@@ -26,8 +26,8 @@ public class NoticeDAO {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("\n INSERT INTO notice ");
-		sql.append("\n (no, title, content, inputDate, inputDate2 ");
-		sql.append("\n VALUES(?, ?, ?, ?, now()) ");
+		sql.append("\n (no, title, content, inputDate) ");
+		sql.append("\n VALUES(?, ?, ?, ?) ");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -49,7 +49,7 @@ public class NoticeDAO {
 			stmt.setString(idx++, vo.getTitle());
 			stmt.setString(idx++, vo.getContent());
 			stmt.setDate(idx++, vo.getInputDate());
-			stmt.setDate(idx++, vo.getInputDate1());
+			
 
 			//
 			int res = stmt.executeUpdate();
@@ -106,12 +106,11 @@ public class NoticeDAO {
 				list.add(new NoticeVO(rs.getInt("no"), 
 						rs.getString("title"), 
 						rs.getString("content"),
-						rs.getDate("inputDate"),
-						rs.getDate("inputDate2")));
+						rs.getDate("inputDate")));
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
@@ -123,7 +122,7 @@ public class NoticeDAO {
 					rs.close();
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 

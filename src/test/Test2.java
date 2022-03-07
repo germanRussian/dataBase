@@ -23,7 +23,7 @@ public class Test2 {
 
 		// 2. 생성자를 활용하여 데이터를 생성할 것이다.
 		NoticeDAO aaa = new NoticeDAO();
-		NoticeVO Createvo = new NoticeVO(0, " JAVA web ", " JAVA ", new Date(System.currentTimeMillis()));
+		NoticeVO Createvo = new NoticeVO(0, " JAVA web ", " JAVA ", new Date(System.currentTimeMillis()), new Date(0)  );
 //		System.out.println(Createvo);
 		aaa.create(Createvo);// 내용 생성하기
 		

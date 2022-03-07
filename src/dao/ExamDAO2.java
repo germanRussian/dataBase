@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+ 
 /**
  * 데이터 관리
  * CRUD는 한 개의 메인에 들어가야한다.
@@ -85,7 +85,6 @@ public class ExamDAO2 extends Dbutil {
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
 		ResultSet rs = null;
 
 		List<SampleVO> list = new ArrayList<SampleVO>();

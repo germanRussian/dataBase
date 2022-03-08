@@ -27,7 +27,7 @@ public class NoticeDAO {
 		StringBuffer sql = new StringBuffer();
 		sql.append("\n INSERT INTO notice ");
 		sql.append("\n (no, title, content, inputDate) ");
-		sql.append("\n VALUES(?, ?, ?, ?) ");
+		sql.append("\n VALUES(?, ?, ?, now()) ");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -48,8 +48,7 @@ public class NoticeDAO {
 			stmt.setInt(idx++, vo.getNo());
 			stmt.setString(idx++, vo.getTitle());
 			stmt.setString(idx++, vo.getContent());
-			stmt.setDate(idx++, vo.getInputDate());
-			
+//			stmt.setDate(idx++, vo.getInputDate());		
 
 			//
 			int res = stmt.executeUpdate();

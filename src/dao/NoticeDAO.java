@@ -40,6 +40,8 @@ public class NoticeDAO {
 
 			// DB연결
 			conn = DriverManager.getConnection(url, user, passward);
+			conn.setAutoCommit(false);
+			
 
 			// sql 실행문
 			stmt = conn.prepareStatement(sql.toString());
@@ -52,6 +54,8 @@ public class NoticeDAO {
 
 			//
 			int res = stmt.executeUpdate();
+			
+			conn.setAutoCommit(true);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -62,6 +66,8 @@ public class NoticeDAO {
 					conn.close();
 				if (stmt != null)
 					stmt.close();
+				conn.rollback();
+				
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

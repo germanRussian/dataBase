@@ -64,7 +64,7 @@ public class BoardTest {
 		//4. 게시판에서 임의의 한 개 게시글을 선택하여 글내용을 조회하시오.
 		
 		BoardVO vo = new BoardVO();
-		vo.setBoard_id(3);
+		vo.setBoard_id(3);//게시글 번호로 검색
 		
 		
 		BoardVO bvo = new BoardDAO().read(vo);

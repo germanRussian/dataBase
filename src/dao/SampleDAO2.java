@@ -102,7 +102,12 @@ public class SampleDAO2 extends Dbutil {
 
 			// 결과처리(Select문만 ResultSet 객체 리턴)
 			while (rs.next()) {
-				list.add(new SampleVO(rs.getInt("num"), rs.getString("strData"), rs.getDate("sampleDate")));
+				list.add(new SampleVO(
+						rs.getInt("num"), 
+						rs.getString("strData"), 
+						rs.getDate("sampleDate")
+						)
+						);
 
 			}
 

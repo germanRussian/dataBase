@@ -17,7 +17,7 @@ import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 import domain.SampleVO;
 import util.Dbutil;
 
-public class ExamDAO2 extends Dbutil {
+public class SampleDAO2 extends Dbutil {
 
 	/** 
 	 * 
@@ -54,7 +54,8 @@ public class ExamDAO2 extends Dbutil {
 			stmt.setDate(idx++, (Date) sp.getSampleDate());
 			
 			
-			int res = stmt.executeUpdate();// 데이터 삽입
+//			int res = stmt.executeUpdate();// 데이터 삽입
+			 stmt.executeUpdate();
 
 		} catch (Exception e) {
 

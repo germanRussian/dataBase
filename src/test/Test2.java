@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import dao.ExamDAO;
-import dao.ExamDAO2;
+import dao.SampleDAO2;
 import dao.NoticeDAO;
 import domain.ExamVO;
 import domain.NoticeVO;

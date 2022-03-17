@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import dao.ExamDAO;
-import dao.ExamDAO2;
+import dao.SampleDAO2;
 import domain.ExamVO;
 import domain.SampleVO;
 
@@ -26,7 +26,7 @@ public class Test1 {
 //		
 
 		// 2. 생성자를 활용하여 데이터를 생성할 것이다.
-		ExamDAO2 aaa = new ExamDAO2();
+		SampleDAO2 aaa = new SampleDAO2();
 		SampleVO Createvo = new SampleVO(0, "Crew1", new Date(System.currentTimeMillis()));
 //		System.out.println(Createvo);
 		aaa.create(Createvo);  // 내용 생성하기
